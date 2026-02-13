@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  # ---------------------------------------------------------------------------
+  # Hubs
+  # ---------------------------------------------------------------------------
+  - name: hub_customer
+    description: "Hub — distinct customer business keys"
+    columns:
+      - name: hk_customer
+        description: "SHA-256 hash of C_CUSTKEY"
+        tests:
+          - not_null
+          - unique
+      - name: c_custkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: hub_order
+    description: "Hub — distinct order business keys"
+    columns:
+      - name: hk_order
+        description: "SHA-256 hash of O_ORDERKEY"
+        tests:
+          - not_null
+          - unique
+      - name: o_orderkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  # ---------------------------------------------------------------------------
+  # Links
+  # ---------------------------------------------------------------------------
+  - name: link_customer_order
+    description: "Link — relationship between customers and orders"
+    columns:
+      - name: hk_order_customer
+        description: "SHA-256 hash of (O_ORDERKEY, O_CUSTKEY)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_order
+        tests:
+          - not_null
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  # ---------------------------------------------------------------------------
+  # Satellites
+  # ---------------------------------------------------------------------------
+  - name: sat_customer_fast
+    description: "Satellite — frequently changing customer attributes (phone, balance)"
+    columns:
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: hash_diff
+        description: "Change hash of (C_PHONE, C_ACCTBAL)"
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: sat_customer_slow
+    description: "Satellite — rarely changing customer attributes (name, address, segment)"
+    columns:
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: hash_diff
+        description: "Change hash of (C_NAME, C_ADDRESS, C_MKTSEGMENT, C_COMMENT)"
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: sat_order
+    description: "Satellite — order descriptive attributes"
+    columns:
+      - name: hk_order
+        tests:
+          - not_null
+      - name: hash_diff
+        description: "Change hash of all order descriptive columns"
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

@@ -1,0 +1,53 @@
+version: 2
+
+sources:
+  - name: tpch
+    description: "TPC-H benchmark dataset from Snowflake sample data"
+    database: SNOWFLAKE_SAMPLE_DATA
+    schema: TPCH_SF1
+    tables:
+      - name: ORDERS
+        description: "Order header records"
+        columns:
+          - name: O_ORDERKEY
+            description: "Primary key of the order"
+          - name: O_CUSTKEY
+            description: "Foreign key to customer"
+          - name: O_ORDERDATE
+            description: "Date the order was placed"
+
+      - name: CUSTOMER
+        description: "Customer master data"
+        columns:
+          - name: C_CUSTKEY
+            description: "Primary key of the customer"
+          - name: C_NATIONKEY
+            description: "Foreign key to nation"
+
+      - name: LINEITEM
+        description: "Order line item details"
+        columns:
+          - name: L_ORDERKEY
+            description: "Foreign key to order"
+          - name: L_LINENUMBER
+            description: "Line number within the order"
+          - name: L_PARTKEY
+            description: "Foreign key to part"
+          - name: L_SUPPKEY
+            description: "Foreign key to supplier"
+          - name: L_SHIPDATE
+            description: "Date the line item was shipped"
+
+      - name: PART
+        description: "Part master data"
+        columns:
+          - name: P_PARTKEY
+            description: "Primary key of the part"
+          - name: P_NAME
+            description: "Name of the part"
+          - name: P_MFGR
+            description: "Manufacturer of the part"
+          - name: P_BRAND
+            description: "Brand of the part"
+          - name: P_TYPE
+            description: "Type of the part"
