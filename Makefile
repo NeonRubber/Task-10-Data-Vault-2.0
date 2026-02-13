@@ -1,13 +1,22 @@
-.PHONY: up down lint clean
+.PHONY: up down lint clean build rebuild
 
 up:
+	docker-compose up -d
+
+build:
+	docker-compose build
+
+rebuild:
+	docker-compose down
+	docker-compose build
 	docker-compose up -d
 
 down:
 	docker-compose down
 
 lint:
-	uv run ruff check .
+lint:
+	uv run ruff check . && \
 	uv run sqlfluff lint dbt_core/models
 
 clean:
