@@ -23,22 +23,27 @@ models:
   # Effectivity Satellite
   # ---------------------------------------------------------------------------
   - name: sat_eff_customer_order
-    description: "Effectivity satellite — tracks active/closed status of customer-order relationships"
+    description: "Effectivity satellite — tracks active/closed status of customer-order relationships (SCD Type 2)"
     columns:
       - name: hk_order_customer
         tests:
           - not_null
       - name: is_active
-        description: "TRUE if order is open/pending, FALSE if fulfilled"
+        description: "TRUE if relationship is currently active"
         tests:
           - not_null
-      - name: relationship_status
-        description: "ACTIVE, CLOSED, or UNKNOWN"
+      - name: effective_from
+        description: "Start timestamp of validity"
         tests:
           - not_null
-          - accepted_values:
-              values: ['ACTIVE', 'CLOSED', 'UNKNOWN']
+      - name: effective_to
+        description: "End timestamp of validity (9999-12-31 if current)"
+        tests:
+          - not_null
       - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
         tests:
           - not_null
 
