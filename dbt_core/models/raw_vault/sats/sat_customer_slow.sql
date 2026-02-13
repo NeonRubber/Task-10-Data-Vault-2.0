@@ -11,8 +11,7 @@ WITH stg AS (
         c_address,
         c_mktsegment,
         c_comment,
-        -- Using hash_sha256
-        {{ hash_sha256(['c_name', 'c_address', 'c_mktsegment', 'c_comment']) }} AS hash_diff,
+        {{ hash_diff(['c_name', 'c_address', 'c_mktsegment', 'c_comment']) }} AS hash_diff,
         load_dt,
         record_source
     FROM {{ ref('stg_customer') }}

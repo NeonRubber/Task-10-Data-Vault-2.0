@@ -3,7 +3,7 @@ x-airflow-common: &airflow-common
     context: .
     dockerfile: airflow/Dockerfile
   env_file:
-    - .env # Reading secrets from .env
+    - .env
   environment: &airflow-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
@@ -67,6 +67,8 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    env_file:
+      - .env
 
   airflow-scheduler:
     <<: *airflow-common
@@ -78,6 +80,8 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+    env_file:
+      - .env
 
 volumes:
   postgres-data:

@@ -59,7 +59,7 @@ staged AS (
         l_comment,
 
         -- Metadata
-        CURRENT_TIMESTAMP() AS load_dt,
+        {{ dbt.string_literal(run_started_at.strftime('%Y-%m-%d %H:%M:%S')) }}::timestamp_ntz AS load_dt,
         'SNOWFLAKE_TPCH'   AS record_source
 
     FROM source

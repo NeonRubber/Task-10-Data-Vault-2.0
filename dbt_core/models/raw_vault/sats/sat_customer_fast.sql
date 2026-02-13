@@ -9,7 +9,7 @@ WITH stg AS (
         hk_customer,
         c_phone,
         c_acctbal,
-        {{ hash_sha256(['c_phone', 'c_acctbal']) }} AS hash_diff,
+        {{ hash_diff(['c_phone', 'c_acctbal']) }} AS hash_diff,
         load_dt,
         record_source
     FROM {{ ref('stg_customer') }}

@@ -18,14 +18,11 @@ clean-targets:
 models:
   retail_vault:
     staging:
-      +materialized: view
       +schema: staging
+      +materialized: view  # Staging лучше делать вьюхами
     raw_vault:
-      +materialized: incremental
       +schema: raw_vault
     business_vault:
-      +materialized: view
       +schema: business_vault
     marts:
-      +materialized: table
       +schema: marts

@@ -15,8 +15,7 @@ WITH stg AS (
         p_container,
         p_retailprice,
         p_comment,
-        -- Hash Diff
-        {{ hash_sha256([
+        {{ hash_diff([
             'p_name', 'p_mfgr', 'p_brand', 'p_type', 
             'p_size', 'p_container', 'p_retailprice', 'p_comment'
         ]) }} AS hash_diff,

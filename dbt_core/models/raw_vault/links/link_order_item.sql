@@ -4,25 +4,23 @@
     incremental_strategy='append'
 ) }}
 
-WITH stg AS (
-    SELECT DISTINCT
-        hk_order_part,
-        hk_order,
-        hk_part,
-        load_dt,
-        record_source
-    FROM {{ ref('stg_lineitem') }}
-)
+{# 
+   Standard Data Vault 2.0 Link:
+   Only contains the hash key of the link, hash keys of the hubs, and metadata.
+   Business keys (like orderkey or linenumber) are strictly excluded.
+#}
 
-SELECT
-    src.hk_order_part,
-    src.hk_order,
-    src.hk_part,
-    src.load_dt,
-    src.record_source
-FROM stg src
+SELECT DISTINCT
+    t1.hk_order_part,
+    t1.hk_order,
+    t1.hk_part,
+    t1.load_dt,
+    t1.record_source
+
+FROM {{ ref('stg_lineitem') }} t1
+
 {% if is_incremental() %}
-LEFT JOIN {{ this }} tgt 
-    ON src.hk_order_part = tgt.hk_order_part
-WHERE tgt.hk_order_part IS NULL
+    LEFT JOIN {{ this }} t2 
+    ON t1.hk_order_part = t2.hk_order_part
+    WHERE t2.hk_order_part IS NULL
 {% endif %}

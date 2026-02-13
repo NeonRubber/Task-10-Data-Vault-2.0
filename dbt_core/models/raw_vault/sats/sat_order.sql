@@ -14,8 +14,7 @@ WITH stg AS (
         o_clerk,
         o_shippriority,
         o_comment,
-        -- Using hash_sha256
-        {{ hash_sha256([
+        {{ hash_diff([
             'o_orderstatus', 'o_totalprice', 'o_orderdate',
             'o_orderpriority', 'o_clerk', 'o_shippriority', 'o_comment'
         ]) }} AS hash_diff,

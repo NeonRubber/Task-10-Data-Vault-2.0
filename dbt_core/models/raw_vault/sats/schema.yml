@@ -8,66 +8,63 @@ models:
     description: "Satellite — frequently changing customer attributes (phone, balance)"
     columns:
       - name: hk_customer
-        tests:
-          - not_null
+        tests: [not_null]
       - name: hash_diff
         description: "Change hash of (C_PHONE, C_ACCTBAL)"
-        tests:
-          - not_null
+        tests: [not_null]
       - name: load_dt
-        tests:
-          - not_null
+        tests: [not_null]
       - name: record_source
-        tests:
-          - not_null
+        tests: [not_null]
 
   - name: sat_customer_slow
     description: "Satellite — rarely changing customer attributes (name, address, segment)"
     columns:
       - name: hk_customer
-        tests:
-          - not_null
+        tests: [not_null]
       - name: hash_diff
         description: "Change hash of (C_NAME, C_ADDRESS, C_MKTSEGMENT, C_COMMENT)"
-        tests:
-          - not_null
+        tests: [not_null]
       - name: load_dt
-        tests:
-          - not_null
+        tests: [not_null]
       - name: record_source
-        tests:
-          - not_null
+        tests: [not_null]
 
   - name: sat_order
     description: "Satellite — order descriptive attributes"
     columns:
       - name: hk_order
-        tests:
-          - not_null
+        tests: [not_null]
       - name: hash_diff
         description: "Change hash of all order descriptive columns"
-        tests:
-          - not_null
+        tests: [not_null]
       - name: load_dt
-        tests:
-          - not_null
+        tests: [not_null]
       - name: record_source
-        tests:
-          - not_null
+        tests: [not_null]
 
   - name: sat_part
     description: "Satellite — part descriptive attributes"
     columns:
       - name: hk_part
-        tests:
-          - not_null
+        tests: [not_null]
       - name: hash_diff
         description: "Change hash of all part descriptive columns"
-        tests:
-          - not_null
+        tests: [not_null]
       - name: load_dt
-        tests:
-          - not_null
+        tests: [not_null]
       - name: record_source
-        tests:
-          - not_null
+        tests: [not_null]
+
+  - name: sat_lineitem
+    description: "Satellite — lineitem metrics and status (quantity, price, discount)"
+    columns:
+      - name: hk_lineitem
+        tests: [not_null]
+      - name: hash_diff
+        description: "Change hash of lineitem attributes"
+        tests: [not_null]
+      - name: load_dt
+        tests: [not_null]
+      - name: record_source
+        tests: [not_null]
