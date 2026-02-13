@@ -32,6 +32,3 @@ models:
         tests:
           - unique
           - not_null
-
-  - name: secure_dim_customer
-    description: "Secure View wrapper for dim_customer."

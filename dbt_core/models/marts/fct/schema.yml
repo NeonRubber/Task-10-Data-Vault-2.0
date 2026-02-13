@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table for orders."
+    columns:
+      - name: hk_order
+        tests:
+          - not_null
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: order_status
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+      - name: priority
+        tests:
+          - not_null
+      - name: updated_at
+        tests:
+          - not_null

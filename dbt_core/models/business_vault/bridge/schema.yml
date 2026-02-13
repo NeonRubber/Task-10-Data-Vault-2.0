@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: bridge_customer_orders
+    description: "Bridge table: High-performance join structure between Customers and Orders. Resolves Hub keys."
+    columns:
+      - name: hk_order_customer
+        description: "Primary Key of the Bridge (inherited from Link)"
+        tests:
+          - unique
+          - not_null
+
+      - name: hk_customer
+        description: "Foreign Key to Hub Customer"
+        tests:
+          - not_null
+      
+      - name: hk_order
+        description: "Foreign Key to Hub Order"
+        tests:
+          - not_null
+
+      - name: c_custkey
+        description: "Human-readable Customer ID"
+      
+      - name: o_orderkey
+        description: "Human-readable Order ID"
+
+      # 4. Metadata
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

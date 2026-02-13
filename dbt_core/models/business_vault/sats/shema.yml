@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: sat_customer_marketing
+    description: "Business satellite — customer enrichment from marketing seed data"
+    columns:
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: hash_diff
+        tests:
+          - not_null
+      - name: segment
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

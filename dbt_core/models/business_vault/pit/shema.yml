@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: pit_customer
+    description: "Sparse PIT — one row per customer per satellite change event"
+    columns:
+      - name: pit_key
+        description: "SHA-256 hash of (hk_customer, pit_load_dt)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: pit_load_dt
+        tests:
+          - not_null
