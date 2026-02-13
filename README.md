@@ -87,23 +87,21 @@ The Snowflake database is organized into strictly defined layers, satisfying the
 ## Project Structure
 
 ```text
-retail_vault/
-├── airflow/
-│   ├── dags/                   # Airflow DAG definitions (Python)
-│   └── Dockerfile              # Custom Airflow image with dbt-snowflake
-├── dbt_core/
-│   ├── models/
-│   │   ├── staging/            # Staging views
-│   │   ├── raw_vault/          # Hubs, Links, Satellites
-│   │   ├── business_vault/     # Bridges, PITs
-│   │   └── marts/              # Dimensions, Facts, Secure Views
-│   ├── seeds/                  # Static reference data
-│   └── dbt_project.yml         # dbt configuration
-├── .github/
-│   └── workflows/              # CI/CD pipelines
-├── .env                        # Environment variables (Git-ignored)
-├── docker-compose.yaml         # Container orchestration
-└── pyproject.toml              # Python dependencies (uv)
+dbt_core/models/
+├── staging/                # 1. Raw staging with hash calculation
+│   ├── customer/
+│   ├── orders/
+│   └── ...
+├── raw_vault/              # 2. The Core Vault
+│   ├── hubs/               # Business Keys
+│   ├── links/              # Relationships
+│   └── sats/               # Descriptive History (SCD2)
+├── business_vault/         # 3. Business Logic
+│   └── sat_eff_...         # Effectivity Satellites (Logic for closing dates)
+└── marts/                  # 4. Consumer Layer (Star Schema)
+    ├── dim_customer.sql    # SCD Type 2 Dimension
+    ├── fct_orders.sql
+    └── ...
 ```
 
 ## Execution Results
