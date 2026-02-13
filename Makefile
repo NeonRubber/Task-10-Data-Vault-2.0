@@ -14,3 +14,9 @@ clean:
 	rm -rf dbt_core/target
 	rm -rf dbt_core/dbt_packages
 	rm -rf dbt_core/logs
+
+initial-load:
+	docker-compose exec airflow-scheduler airflow dags trigger retail_full_load
+
+clean-up:
+	docker-compose exec airflow-scheduler airflow dags trigger retail_cleanup

@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  # ---------------------------------------------------------------------------
+  # Hubs
+  # ---------------------------------------------------------------------------
+  - name: hub_customer
+    description: "Hub — distinct customer business keys"
+    columns:
+      - name: hk_customer
+        description: "SHA-256 hash of C_CUSTKEY"
+        tests:
+          - not_null
+          - unique
+      - name: c_custkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: hub_order
+    description: "Hub — distinct order business keys"
+    columns:
+      - name: hk_order
+        description: "SHA-256 hash of O_ORDERKEY"
+        tests:
+          - not_null
+          - unique
+      - name: o_orderkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: hub_part
+    description: "Hub — distinct part business keys"
+    columns:
+      - name: hk_part
+        description: "SHA-256 hash of P_PARTKEY"
+        tests:
+          - not_null
+          - unique
+      - name: p_partkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: "Staged customer data with hub and link hash keys"
+    columns:
+      - name: hk_customer
+        description: "Hub key — SHA-256 hash of C_CUSTKEY"
+        tests:
+          - not_null
+          - unique
+      - name: hk_customer_nation
+        description: "Link key — SHA-256 hash of (C_CUSTKEY, C_NATIONKEY)"
+        tests:
+          - not_null
+      - name: c_custkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

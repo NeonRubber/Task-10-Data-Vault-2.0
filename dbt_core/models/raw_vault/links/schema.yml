@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  # ---------------------------------------------------------------------------
+  # Links
+  # ---------------------------------------------------------------------------
+  - name: link_customer_order
+    description: "Link — relationship between customers and orders"
+    columns:
+      - name: hk_order_customer
+        description: "SHA-256 hash of (O_ORDERKEY, O_CUSTKEY)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_order
+        tests:
+          - not_null
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
+
+  - name: link_order_item
+    description: "Link — relationship between orders and parts (product in order)"
+    columns:
+      - name: hk_order_part
+        description: "SHA-256 hash of (L_ORDERKEY, L_PARTKEY)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_order
+        tests:
+          - not_null
+      - name: hk_part
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

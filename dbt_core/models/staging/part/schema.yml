@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_part
+    description: "Staged part data"
+    columns:
+      - name: hk_part
+        description: "Hub key — SHA-256 hash of P_PARTKEY"
+        tests:
+          - not_null
+          - unique
+      - name: p_partkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

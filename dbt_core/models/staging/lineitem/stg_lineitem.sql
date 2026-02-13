@@ -10,7 +10,7 @@ WITH source AS (
 
     SELECT
         *
-    FROM {{ source('tpch', 'LINEITEM') }}
+    FROM {{ source('tpch', 'lineitem') }}
 
     {% if is_incremental() %}
     WHERE l_shipdate > (SELECT MAX(l_shipdate) FROM {{ this }})
@@ -26,6 +26,9 @@ staged AS (
 
         -- Link key: LineItem <-> Order
         {{ hash_sha256(['L_ORDERKEY', 'L_LINENUMBER', 'L_ORDERKEY']) }} AS hk_lineitem_order,
+
+        -- Link key: Order <-> Part
+        {{ hash_sha256(['L_ORDERKEY', 'L_PARTKEY']) }} AS hk_order_part,
 
         -- Link key: Part <-> Supplier
         {{ hash_sha256(['L_PARTKEY', 'L_SUPPKEY']) }} AS hk_lineitem_part_supplier,

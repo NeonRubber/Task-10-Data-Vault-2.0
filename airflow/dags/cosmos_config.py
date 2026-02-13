@@ -1,6 +1,7 @@
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig, RenderConfig
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 from cosmos.constants import TestBehavior
+from utils.constants import SNOWFLAKE_CONN_ID
 
 # Path constants
 DBT_PROJECT_DIR = "/opt/airflow/dbt_core"
@@ -12,7 +13,7 @@ profile_config = ProfileConfig(
     profile_name="retail_vault",
     target_name="dev",
     profile_mapping=SnowflakeUserPasswordProfileMapping(
-        conn_id="snowflake_default",
+        conn_id=SNOWFLAKE_CONN_ID,
         profile_args={
             "database": "RETAIL_VAULT_DEV",
             "schema": "PUBLIC"

@@ -143,12 +143,13 @@ cython_debug/
 .vscode/
 
 # dbt
-dbt_core/target/
-dbt_core/dbt_packages/
-dbt_core/logs/
-dbt_packages/
 target/
+dbt_packages/
 logs/
+.DS_Store
+__pycache__/
+*.pyc
+.env
 
 # Airflow
 airflow-webserver.pid

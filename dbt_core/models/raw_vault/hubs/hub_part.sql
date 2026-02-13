@@ -1,26 +1,26 @@
 {{ config(
     materialized='incremental',
-    unique_key='hk_order',
+    unique_key='hk_part',
     incremental_strategy='append'
 ) }}
 
 WITH stg AS (
     SELECT DISTINCT
-        hk_order,
-        o_orderkey,
+        hk_part,
+        p_partkey,
         load_dt,
         record_source
-    FROM {{ ref('stg_orders') }}
+    FROM {{ ref('stg_part') }}
 )
 
 SELECT
-    src.hk_order,
-    src.o_orderkey,
+    src.hk_part,
+    src.p_partkey,
     src.load_dt,
     src.record_source
 FROM stg src
 {% if is_incremental() %}
 LEFT JOIN {{ this }} tgt 
-    ON src.hk_order = tgt.hk_order
-WHERE tgt.hk_order IS NULL
+    ON src.hk_part = tgt.hk_part
+WHERE tgt.hk_part IS NULL
 {% endif %}

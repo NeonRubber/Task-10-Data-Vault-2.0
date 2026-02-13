@@ -10,7 +10,7 @@ WITH source AS (
 
     SELECT
         *
-    FROM {{ source('tpch', 'ORDERS') }}
+    FROM {{ source('tpch', 'orders') }}
 
     {% if is_incremental() %}
     WHERE o_orderdate > (SELECT MAX(o_orderdate) FROM {{ this }})

@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_lineitem
+    description: "Staged line item data with hub and link hash keys (incremental on L_SHIPDATE)"
+    columns:
+      - name: hk_lineitem
+        description: "Hub key — SHA-256 hash of (L_ORDERKEY, L_LINENUMBER)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_lineitem_order
+        description: "Link key — SHA-256 hash of (L_ORDERKEY, L_LINENUMBER, L_ORDERKEY)"
+        tests:
+          - not_null
+      - name: hk_order_part
+        description: "Link key — SHA-256 hash of (L_ORDERKEY, L_PARTKEY)"
+        tests:
+          - not_null
+      - name: hk_lineitem_part_supplier
+        description: "Link key — SHA-256 hash of (L_PARTKEY, L_SUPPKEY)"
+        tests:
+          - not_null
+      - name: l_orderkey
+        tests:
+          - not_null
+      - name: l_linenumber
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

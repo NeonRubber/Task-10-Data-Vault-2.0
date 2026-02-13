@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Staged order data with hub and link hash keys (incremental on O_ORDERDATE)"
+    columns:
+      - name: hk_order
+        description: "Hub key — SHA-256 hash of O_ORDERKEY"
+        tests:
+          - not_null
+          - unique
+      - name: hk_order_customer
+        description: "Link key — SHA-256 hash of (O_ORDERKEY, O_CUSTKEY)"
+        tests:
+          - not_null
+      - name: hk_customer
+        description: "Hub key reference — SHA-256 hash of O_CUSTKEY"
+        tests:
+          - not_null
+      - name: o_orderkey
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null

@@ -8,7 +8,7 @@ WITH source AS (
 
     SELECT
         *
-    FROM {{ source('tpch', 'PART') }}
+    FROM {{ source('tpch', 'part') }}
 
 ),
 

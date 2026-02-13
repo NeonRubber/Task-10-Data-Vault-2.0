@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key='customer_sk', 
+    unique_key=['customer_sk', 'valid_from'], 
     incremental_strategy='merge',
     tags=['marts']
 ) }}
@@ -62,5 +62,11 @@ final_with_hash AS (
 SELECT * FROM final_with_hash
 
 {% if is_incremental() %}
-    WHERE hash_diff_dim NOT IN (SELECT hash_diff_dim FROM {{ this }})
+    -- Filter out records that are already present (exact match on hash_diff AND valid_from)
+    -- Or just rely on unique_key merge which will insert if (customer_sk, valid_from) is new.
+    -- To accumulate history, we want to INSERT if hash_diff changed, which implies new valid_from (load_dt).
+    WHERE 1=1 -- Let the MERGE handle it via unique_key
+    -- Although typically we filter to optimize.
+    -- If we filter by hash_diff NOT IN, we get the new row.
+    AND hash_diff_dim NOT IN (SELECT hash_diff_dim FROM {{ this }})
 {% endif %}

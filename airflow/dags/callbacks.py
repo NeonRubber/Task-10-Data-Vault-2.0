@@ -1,9 +1,9 @@
 import logging
 import requests
 from airflow.models import Variable
+from utils.constants import TG_TOKEN_VAR, TG_CHAT_ID_VAR
 
-TG_TOKEN = Variable.get("TELEGRAM_TOKEN", default_var=None)
-TG_CHAT_ID = Variable.get("TELEGRAM_CHAT_ID", default_var=None)
+
 
 SUCCESS_IMAGES = ["https://media.tenor.com/g9EDqXL6Pd0AAAAe/cat-like.png"]
 FAILURE_IMAGES = ["https://media.tenor.com/fjk1rI5fZxYAAAAe/siren-borzoi-siren-dog.png"]
@@ -11,8 +11,12 @@ FAILURE_IMAGES = ["https://media.tenor.com/fjk1rI5fZxYAAAAe/siren-borzoi-siren-d
 def send_telegram_notification(context, status):
     # Send Telegram notification using Airflow Variables
     try:
+        # Fetch variables inside the function to avoid DB hits during parsing
+        tg_token = Variable.get(TG_TOKEN_VAR, default_var=None)
+        tg_chat_id = Variable.get(TG_CHAT_ID_VAR, default_var=None)
+
         # Check for tokens
-        if not TG_TOKEN or not TG_CHAT_ID:
+        if not tg_token or not tg_chat_id:
             raise ValueError("Telegram Token or Chat ID not found in Airflow Variables!")
 
         # 1 Preparing the data
@@ -37,9 +41,9 @@ def send_telegram_notification(context, status):
         )
 
         # 4 Sending the request
-        url = f"https://api.telegram.org/bot{TG_TOKEN}/sendPhoto"
+        url = f"https://api.telegram.org/bot{tg_token}/sendPhoto"
         payload = {
-            "chat_id": TG_CHAT_ID,
+            "chat_id": tg_chat_id,
             "photo": img,
             "caption": caption
         }
