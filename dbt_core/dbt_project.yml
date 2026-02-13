@@ -1,0 +1,31 @@
+name: 'retail_vault'
+version: '1.0.0'
+config-version: 2
+
+profile: 'retail_vault'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  retail_vault:
+    staging:
+      +materialized: view
+      +schema: staging
+    raw_vault:
+      +materialized: incremental
+      +schema: raw_vault
+    business_vault:
+      +materialized: view
+      +schema: business_vault
+    marts:
+      +materialized: table
+      +schema: marts
