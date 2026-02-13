@@ -1,0 +1,7 @@
+# Airflow container Python dependencies
+apache-airflow==2.10.3
+apache-airflow-providers-openlineage==1.8.0
+astronomer-cosmos==1.11.2
+dbt-core==1.7.10
+dbt-snowflake==1.7.0
+loguru==0.7.2

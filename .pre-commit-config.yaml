@@ -1,0 +1,22 @@
+repos:
+  # Ruff (Python Linting)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.0
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+
+  # Gitleaks/Trufflehog (Secrets)
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+
+  # SQLFluff (SQL Linting)
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 3.0.0
+    hooks:
+      - id: sqlfluff-lint
+        args: [--dialect, snowflake, dbt_core/models]
+        additional_dependencies: ['dbt-snowflake', 'sqlfluff-templater-dbt']

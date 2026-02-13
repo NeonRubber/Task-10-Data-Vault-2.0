@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "SCD Type 2 Customer Dimension. Sourced from PIT + Satellites."
+    columns:
+      - name: customer_sk
+        tests:
+          - unique
+          - not_null
+      - name: valid_from
+        tests:
+          - not_null
+      - name: valid_to
+        tests:
+          - not_null
+      - name: is_current
+        tests:
+          - not_null
+
+  - name: dim_product
+    description: "Type 1 Product Dimension. Sourced from PART."
+    columns:
+      - name: product_sk
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: "Date Dimension (1990-2010)."
+    columns:
+      - name: date_key
+        tests:
+          - unique
+          - not_null
+
+  - name: secure_dim_customer
+    description: "Secure View wrapper for dim_customer."

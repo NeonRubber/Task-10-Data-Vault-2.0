@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  # ---------------------------------------------------------------------------
+  # Point-In-Time
+  # ---------------------------------------------------------------------------
+  - name: pit_customer
+    description: "Sparse PIT — one row per customer per satellite change event"
+    columns:
+      - name: pit_key
+        description: "SHA-256 hash of (hk_customer, pit_load_dt)"
+        tests:
+          - not_null
+          - unique
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: pit_load_dt
+        tests:
+          - not_null
+
+  # ---------------------------------------------------------------------------
+  # Effectivity Satellite
+  # ---------------------------------------------------------------------------
+  - name: sat_eff_customer_order
+    description: "Effectivity satellite — tracks active/closed status of customer-order relationships"
+    columns:
+      - name: hk_order_customer
+        tests:
+          - not_null
+      - name: is_active
+        description: "TRUE if order is open/pending, FALSE if fulfilled"
+        tests:
+          - not_null
+      - name: relationship_status
+        description: "ACTIVE, CLOSED, or UNKNOWN"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACTIVE', 'CLOSED', 'UNKNOWN']
+      - name: load_dt
+        tests:
+          - not_null
+
+  # ---------------------------------------------------------------------------
+  # Business Satellite
+  # ---------------------------------------------------------------------------
+  - name: sat_customer_marketing
+    description: "Business satellite — customer enrichment from marketing seed data"
+    columns:
+      - name: hk_customer
+        tests:
+          - not_null
+      - name: hash_diff
+        tests:
+          - not_null
+      - name: segment
+        tests:
+          - not_null
+      - name: load_dt
+        tests:
+          - not_null
+      - name: record_source
+        tests:
+          - not_null
